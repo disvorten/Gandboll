@@ -81,6 +81,13 @@ public class Shooter_generator : MonoBehaviour
             //Debug.Log(end_point);
             Vector3 direction = end_point - start_point_in_global;
             var new_shooter = Instantiate(shooter, start_point_in_global, Quaternion.identity);
+
+            SuperBallSpawnAnimator ballSpawnAnim = new_shooter.GetComponentInChildren<SuperBallSpawnAnimator>();
+            ballSpawnAnim.animTime = delta_before_shoot;
+            new_shooter.transform.GetChild(0).localScale = new_shooter.transform.localScale * setup_config.config.diameter_of_stimul;
+            ballSpawnAnim.Init();
+
+
             new_shooter.GetComponent<Shooter_controller>().is_false_stimul = is_false_stimuls;
             new_shooter.GetComponent<Shooter_controller>().velocity = velocity;
             new_shooter.GetComponent<Shooter_controller>().delta_before_shoot = delta_before_shoot;
