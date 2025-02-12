@@ -32,6 +32,7 @@ public class ArmTrigger : MonoBehaviour
                 success.Play();
                 generator.points_counter.Invoke(0, 1);
             }
+            other.GetComponent<Rigidbody>().useGravity = true;
             StartCoroutine(DelayedDestroy(other.transform.parent.gameObject));
         }
     }

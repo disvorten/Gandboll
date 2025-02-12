@@ -8,7 +8,7 @@ public class SuperPicoEyeTracker : MonoBehaviour
     [SerializeField] bool initOnStart = false;
     [SerializeField] bool isOn = false;
 
-    [SerializeField] private DataPathCreator pathCreator;
+    public DataPathCreator pathCreator;
     public string filename = "eyedata";
     
 
@@ -71,7 +71,7 @@ public class SuperPicoEyeTracker : MonoBehaviour
         Debug.Log($"writing to: {fullpath}");
 
         writer = new StreamWriter(fullpath, true, System.Text.Encoding.UTF8);
-        writer.WriteLine("datetime;" +
+        writer.WriteLine("Timestamp;" +
             "leftPos.x;leftPos.y;leftPos.z;leftRot.x;leftRot.y;leftRot.z;leftRot.w;leftOpenness;" +
             "rightPos.x;rightPos.y;rightPos.z;rightRot.x;rightRot.y;rightRot.z;rightRot.w;rightOpenness;" +
             "centerPos.x;centerPos.y;centerPos.z;centerRot.x;centerRot.y;centerRot.z;centerRot.w");

@@ -28,7 +28,7 @@ public class StimulDataWriter : MonoBehaviour
             File.CreateText(cfg).Close();
             using (StreamWriter sw = File.AppendText(stimul_path + $"/{stimul_number}_stimul.csv"))
             {
-                sw.WriteLine($"Point`s of stimul`s start time :{DateTime.Now:HH:mm:ss.fffff}: Delay before stimul appears :{GetComponent<Shooter_controller>().delta_before_shoot}:");
+                sw.WriteLine($"Point`s of stimul`s start time :{DateTime.Now:HH:mm:ss.fffff}: Delay before stimul appears :{GetComponent<Shooter_controller>().delta_before_shoot}: Velocity :{GetComponent<Shooter_controller>().velocity}:");
                 sw.WriteLine("Timestamp;Position.x;Position.y;Position.z;Is_false_stimul;Is_catched");
                 sw.Close();
             }

@@ -8,6 +8,7 @@ using System.Globalization;
 public class ConfigReader : ScriptableObject
 {
     public Vector3 throw_area { get; private set; }
+    public Vector2 throw_area_depth { get; private set; }
     public float number_of_stimuls { get; private set; }
     public float value_of_velocity_increase { get; private set; }
     public float mass_of_stimul { get; private set; }
@@ -38,6 +39,7 @@ public class ConfigReader : ScriptableObject
                     {
                         case "throw_area":
                             throw_area = new Vector3(float.Parse(lines[i + 1].Split(delimeter)[0], culture), float.Parse(lines[i + 1].Split(delimeter)[1], culture), float.Parse(lines[i + 1].Split(delimeter)[2], culture));
+                            throw_area_depth = new Vector2(float.Parse(lines[i + 1].Split(delimeter)[3], culture), float.Parse(lines[i + 1].Split(delimeter)[4], culture));
                             break;
                         case "number_of_stimuls":
                             number_of_stimuls = float.Parse(lines[i + 1], culture);

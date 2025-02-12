@@ -130,13 +130,13 @@ public class Shooter_generator : MonoBehaviour
     private Vector3 GenerateStartPointWithDistribution()
     {
         var throw_area = setup_config.config.throw_area;
+        var throw_area_depth = setup_config.config.throw_area_depth;
         
         float angle =
                      (float)(0 + throw_area[0] / 3.5 * GenerateStdNormal());
         float height =
                      (float)((throw_area[2] - throw_area[1])/2 + (throw_area[2] - throw_area[1]) / 7 * GenerateStdNormal());
-        float depth = GenerateValueWithRandom(6, 9);
-        //Debug.Log("angle = " + angle);
+        float depth = GenerateValueWithRandom(throw_area_depth[0], throw_area_depth[1]);
         return new Vector3(angle, height, depth);
     }
 

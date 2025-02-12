@@ -40,7 +40,7 @@ public class Shooter_controller : MonoBehaviour
             ball.GetComponent<Rigidbody>().useGravity = false;
         ball.GetComponent<Rigidbody>().mass = mass_of_stimul;
         ball.GetComponent<Rigidbody>().AddForce(direction * velocity/3.6f/7.87f, ForceMode.VelocityChange);
-        ball.GetComponent<Rigidbody>().AddTorque(new Vector3(0.7f,0.7f, 0.7f) * velocity, ForceMode.VelocityChange);
+        ball.GetComponent<Rigidbody>().AddTorque(new Vector3(0.7f, 0.7f, 0.7f) * velocity, ForceMode.VelocityChange);
     }
 
 }

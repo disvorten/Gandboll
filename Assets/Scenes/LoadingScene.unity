@@ -1871,7 +1871,7 @@ GameObject:
   - component: {fileID: 5460716780554494582}
   - component: {fileID: 2881152804553435849}
   m_Layer: 5
-  m_Name: Building Block Controller Canvas Interaction Canvas
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3596,7 +3596,7 @@ PrefabInstance:
     - target: {fileID: 1089057520740910133, guid: e13ce1e96c335df4d957321bb1e04a9c,
         type: 3}
       propertyPath: m_Name
-      value: Building Block Controller Canvas Interaction XR Origin (XR Rig)
+      value: XRRig
       objectReference: {fileID: 0}
     - target: {fileID: 1657483686222566298, guid: e13ce1e96c335df4d957321bb1e04a9c,
         type: 3}
