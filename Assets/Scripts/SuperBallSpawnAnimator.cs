@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class SuperBallSpawnAnimator : MonoBehaviour
 {
     [SerializeField] private GameObject[] parts;
-    [SerializeField] float alphaMultiplier = 1f;
+    [SerializeField] float alphaMultiplier = 1, partDistanceMultiplier = 2;
     [SerializeField] Color color;
     private List<Vector3> positions;
     private List<float> times;
@@ -28,7 +28,11 @@ public class SuperBallSpawnAnimator : MonoBehaviour
         {
             //Debug.Log($"iterating: {part.name}");
             Vector3 pivot = part.GetComponent<MeshRenderer>().bounds.center;
-            part.transform.position = pivot;
+            pivot = pivot - gameObject.transform.position;
+            //Debug.Log($"pivot pre-multiplied: {pivot}");
+            pivot = new Vector3(pivot.x * partDistanceMultiplier, pivot.y * partDistanceMultiplier, pivot.z * partDistanceMultiplier);
+            //Debug.Log($"pivot multiplied: {pivot}");
+            part.transform.localPosition = pivot;
             positions.Add(pivot);
             times.Add(Random.Range(animTime / 10, animTime));
             materials.Add(part.GetComponent<MeshRenderer>().material);
@@ -68,7 +72,7 @@ public class SuperBallSpawnAnimator : MonoBehaviour
             if (times[index] > 0)
             {
                 times[index] = times[index] - Time.deltaTime;
-                part.transform.position = Vector3.Lerp(transform.position, positions[index], 
+                part.transform.localPosition = Vector3.Lerp(Vector3.zero, positions[index], 
                     times[index] / animTime);
             }
             materials[index].color = color;
