@@ -7,14 +7,18 @@ public class ArmTrigger : MonoBehaviour
     [SerializeField] private Shooter_generator generator;
     [SerializeField] private AudioSource success;
     [SerializeField] private AudioSource wrong;
+    [SerializeField] private bool right;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Ball"))
         {
-            
+            if (other.transform.parent.GetComponent<Shooter_controller>().is_catched)
+            {
+                return;
+            }
             other.transform.parent.GetComponent<Shooter_controller>().is_catched = true;
-            if(gameObject.name == "HandLeft(Clone)")
+            if(!right)
                 PXR_Input.SendHapticImpulse(PXR_Input.VibrateType.LeftController, 0.3f, 400, 80);
             else
                 PXR_Input.SendHapticImpulse(PXR_Input.VibrateType.RightController, 0.3f, 400, 80);
@@ -34,8 +38,7 @@ public class ArmTrigger : MonoBehaviour
 
     private IEnumerator DelayedDestroy(GameObject obj)
     {
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(1);
         Destroy(obj);
     }
 }
