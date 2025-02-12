@@ -58,9 +58,9 @@ public class SuperBallSpawnAnimator : MonoBehaviour
         }
 
         alpha = Mathf.Clamp01(alpha);
-        color.a = alpha;
+        color.a = alpha * alphaMultiplier;
 
-        Debug.Log($"color.a = {color.a}, alpha = {alpha}");
+        //Debug.Log($"color.a = {color.a}, alpha = {alpha}");
 
         foreach (GameObject part in parts)
         {

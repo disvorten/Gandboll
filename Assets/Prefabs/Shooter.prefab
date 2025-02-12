@@ -46,8 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8480f39d4caf15b43a2e0aafb285bc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 8126459459464676147, guid: 3dac36ea34591e0499b196e5a01a8966,
-    type: 3}
+  projectiles:
+  - {fileID: 8126459459464676147, guid: 3dac36ea34591e0499b196e5a01a8966, type: 3}
+  - {fileID: 8126459459464676147, guid: a7c05d5946f27b1428319eecdd65efc9, type: 3}
+  - {fileID: 8126459459464676147, guid: 9b7170ca3cdf8ab4dbc626815b153301, type: 3}
+  color1: {r: 0.4509804, g: 0.118402526, b: 0.007843146, a: 1}
+  color2: {r: 0.2830189, g: 0.03604486, b: 0.04079438, a: 1}
   is_false_stimul: 0
   velocity: 0
   direction: {x: 0, y: 0, z: 0}
@@ -76,6 +80,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3655106460950095837}
     m_Modifications:
+    - target: {fileID: 1799771199299504153, guid: 1f6dd0e68307e4542b5e48dba69793a8,
+        type: 3}
+      propertyPath: color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1799771199299504153, guid: 1f6dd0e68307e4542b5e48dba69793a8,
         type: 3}
       propertyPath: color.b

@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class Shooter_controller : MonoBehaviour
 {
-    [SerializeField] private GameObject projectile;
+    [SerializeField] private GameObject[] projectiles;
+    [SerializeField]
+    private Color color1 = new Color(0.171f, 0.013f, 0),
+        color2 = new Color(0.096f, 0, 0.003f);
     public bool is_false_stimul = false;
     public float velocity;
     public Vector3 direction;
@@ -12,6 +15,7 @@ public class Shooter_controller : MonoBehaviour
     public float mass_of_stimul;
     public bool is_catched = false;
     public bool use_gravity = false;
+    
     void Start()
     {
         StartCoroutine(CreateStimul());
@@ -20,12 +24,13 @@ public class Shooter_controller : MonoBehaviour
     private IEnumerator CreateStimul()
     {
         yield return new WaitForSeconds(delta_before_shoot);
+        var projectile = projectiles[Random.Range(0, projectiles.Length)];
         var ball = Instantiate(projectile, transform.position, transform.rotation, transform);
         ball.transform.localScale = Vector3.one * diameter_of_stimul;
         if (is_false_stimul)
         {
-            ball.GetComponent<MeshRenderer>().materials[0].color = Color.red;
-            ball.GetComponent<MeshRenderer>().materials[1].color = Color.red;
+            ball.GetComponent<MeshRenderer>().materials[0].color = color1;
+            ball.GetComponent<MeshRenderer>().materials[1].color = color2;
         }
         if(use_gravity)
         {

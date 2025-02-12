@@ -23,6 +23,7 @@ public class Shooter_generator : MonoBehaviour
     [SerializeField] private AudioSource click;
     [SerializeField] private AudioSource start;
     [SerializeField] private AudioSource end;
+    [SerializeField] private GameObject arrow;
 
     private void Start()
     {
@@ -46,12 +47,14 @@ public class Shooter_generator : MonoBehaviour
     }
     private IEnumerator StartExperiment()
     {
+        arrow.SetActive(true);
         for (int i = 0;i < 5; i++)
         {
             click.Play();
             start_text.text = $"Эксперимент начнется через {5 - i} секунд";
             yield return new WaitForSeconds(1f);
         }
+        arrow.SetActive(false);
         start_text.gameObject.SetActive(false);
         start.Play();
         for (int i = 0; i < stimuls_number; i++)
