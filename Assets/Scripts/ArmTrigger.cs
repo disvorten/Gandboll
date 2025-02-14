@@ -39,7 +39,7 @@ public class ArmTrigger : MonoBehaviour
 
     private IEnumerator DelayedDestroy(GameObject obj)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         Destroy(obj);
     }
 }
