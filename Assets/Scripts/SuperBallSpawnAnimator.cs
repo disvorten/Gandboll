@@ -32,6 +32,10 @@ public class SuperBallSpawnAnimator : MonoBehaviour
             //Debug.Log($"pivot pre-multiplied: {pivot}");
             pivot = new Vector3(pivot.x * partDistanceMultiplier, pivot.y * partDistanceMultiplier, pivot.z * partDistanceMultiplier);
             //Debug.Log($"pivot multiplied: {pivot}");
+            pivot = pivot - gameObject.transform.position;
+            //Debug.Log($"pivot pre-multiplied: {pivot}");
+            pivot = new Vector3(pivot.x * partDistanceMultiplier, pivot.y * partDistanceMultiplier, pivot.z * partDistanceMultiplier);
+            //Debug.Log($"pivot multiplied: {pivot}");
             part.transform.localPosition = pivot;
             positions.Add(pivot);
             times.Add(Random.Range(animTime / 10, animTime));
@@ -72,7 +76,7 @@ public class SuperBallSpawnAnimator : MonoBehaviour
             if (times[index] > 0)
             {
                 times[index] = times[index] - Time.deltaTime;
-                part.transform.localPosition = Vector3.Lerp(Vector3.zero, positions[index], 
+                part.transform.localPosition = Vector3.Lerp(Vector3.zero, positions[index],
                     times[index] / animTime);
             }
             materials[index].color = color;
