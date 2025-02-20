@@ -40,12 +40,12 @@ public class StimulDataWriter : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Is_write_data") == 1)
         {
-            if (transform.childCount != 0)
+            if (transform.childCount >= 2)
             {
                 using (StreamWriter sw = File.AppendText(stimul_path + $"/{stimul_number}_stimul.csv"))
                 {
-                    var position = transform.GetChild(0).position;
-                    var rotation = transform.GetChild(0).rotation;
+                    var position = transform.GetChild(1).position;
+                    var rotation = transform.GetChild(1).rotation;
                     int false_stim = GetComponent<Shooter_controller>().is_false_stimul == true ? 1 : 0;
                     int is_catched = GetComponent<Shooter_controller>().is_catched == true ? 1 : 0;
                     sw.WriteLine($"{DateTime.Now:HH:mm:ss.fffff};{position.x};{position.y};{position.z};{false_stim};{is_catched}");
