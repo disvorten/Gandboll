@@ -32,10 +32,6 @@ public class SuperBallSpawnAnimator : MonoBehaviour
             //Debug.Log($"pivot pre-multiplied: {pivot}");
             pivot = new Vector3(pivot.x * partDistanceMultiplier, pivot.y * partDistanceMultiplier, pivot.z * partDistanceMultiplier);
             //Debug.Log($"pivot multiplied: {pivot}");
-            pivot = pivot - gameObject.transform.position;
-            //Debug.Log($"pivot pre-multiplied: {pivot}");
-            pivot = new Vector3(pivot.x * partDistanceMultiplier, pivot.y * partDistanceMultiplier, pivot.z * partDistanceMultiplier);
-            //Debug.Log($"pivot multiplied: {pivot}");
             part.transform.localPosition = pivot;
             positions.Add(pivot);
             times.Add(Random.Range(animTime / 10, animTime));
