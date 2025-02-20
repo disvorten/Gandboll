@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class SuperBallSpawnAnimator : MonoBehaviour
 {
     [SerializeField] private GameObject[] parts;
-    [SerializeField] float alphaMultiplier = 1, partDistanceMultiplier = 2;
+    [SerializeField] float alphaMultiplier = 1f, partDistanceMultiplier = 1.1f;
     [SerializeField] Color color;
     private List<Vector3> positions;
     private List<float> times;

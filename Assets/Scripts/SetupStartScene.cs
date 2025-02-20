@@ -32,6 +32,10 @@ public class SetupStartScene : MonoBehaviour
         start_button.onClick.AddListener(() => OpenScene());
         custom_setup_button.onClick.AddListener(() => CustomSetup());
         name_input.onValueChanged.AddListener(ChangeName);
+        if (PlayerPrefs.GetInt("Is_write_data", 1) == 1)
+            write_data.isOn = true;
+        else
+            write_data.isOn = false;
     }
     private void OpenScene()
     {
