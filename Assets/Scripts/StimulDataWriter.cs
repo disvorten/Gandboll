@@ -28,8 +28,8 @@ public class StimulDataWriter : MonoBehaviour
             File.CreateText(cfg).Close();
             using (StreamWriter sw = File.AppendText(stimul_path + $"/{stimul_number}_stimul.csv"))
             {
-                sw.WriteLine($"Point`s of stimul`s start time :{DateTime.Now:HH:mm:ss.fffff}: Delay before stimul appears :{GetComponent<Shooter_controller>().delta_before_shoot}: Velocity :{GetComponent<Shooter_controller>().velocity}:");
-                sw.WriteLine("Timestamp;Position.x;Position.y;Position.z;Is_false_stimul;Is_catched");
+                //sw.WriteLine($"Point`s of stimul`s start time :{DateTime.Now:HH:mm:ss.fffff}: Delay before stimul appears :{GetComponent<Shooter_controller>().delta_before_shoot}: Velocity :{GetComponent<Shooter_controller>().velocity}:");
+                sw.WriteLine($"Timestamp;Position.x;Position.y;Position.z;Is_false_stimul;Is_catched;Point`s of stimul`s start time :{DateTime.Now:HH:mm:ss.fffff}: Delay before stimul appears :{GetComponent<Shooter_controller>().delta_before_shoot}: Velocity :{GetComponent<Shooter_controller>().velocity}:");
                 sw.Close();
             }
             File.Copy(config_path, cfg, true);
@@ -48,7 +48,7 @@ public class StimulDataWriter : MonoBehaviour
                     var rotation = transform.GetChild(1).rotation;
                     int false_stim = GetComponent<Shooter_controller>().is_false_stimul == true ? 1 : 0;
                     int is_catched = GetComponent<Shooter_controller>().is_catched == true ? 1 : 0;
-                    sw.WriteLine($"{DateTime.Now:HH:mm:ss.fffff};{position.x};{position.y};{position.z};{false_stim};{is_catched}");
+                    sw.WriteLine($"{DateTime.Now:HH:mm:ss.fffff};{position.x};{position.y};{position.z};{false_stim};{is_catched};");
                     sw.Close();
                 }
             }
