@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HandAndArmsWriter : MonoBehaviour
 {
-    [SerializeField] private SuperPicoEyeTracker eyeTracker;
+    [SerializeField] private SuperPicoEyeTracker_With_HandsHead eyeTracker;
     [SerializeField] private GameObject head;
     [SerializeField] private GameObject right_arm;
     [SerializeField] private GameObject left_arm;
@@ -26,12 +26,14 @@ public class HandAndArmsWriter : MonoBehaviour
             Directory.CreateDirectory(filepath);
         }
         writerHead = new StreamWriter(fullpath, true, System.Text.Encoding.UTF8);
+        writerHead.Flush();
         writerHead.WriteLine("Timestamp;Position.x;Position.y;Position.z;Rotation.x;Rotation.y;Rotation.z;Rotation.w");
         if(left_arm.activeSelf)
         {
             filename = "LeftArmData" + ".csv";
             fullpath = Path.Combine(filepath, filename);
             writerLA = new StreamWriter(fullpath, true, System.Text.Encoding.UTF8);
+            writerLA.Flush();
             writerLA.WriteLine("Timestamp;Position.x;Position.y;Position.z;Rotation.x;Rotation.y;Rotation.z;Rotation.w");
         }
         if(right_arm.activeSelf)
@@ -39,6 +41,7 @@ public class HandAndArmsWriter : MonoBehaviour
             filename = "RightArmData" + ".csv";
             fullpath = Path.Combine(filepath, filename);
             writerRA = new StreamWriter(fullpath, true, System.Text.Encoding.UTF8);
+            writerRA.Flush();
             writerRA.WriteLine("Timestamp;Position.x;Position.y;Position.z;Rotation.x;Rotation.y;Rotation.z;Rotation.w");
         }
         isOn = true;

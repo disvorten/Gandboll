@@ -1426,7 +1426,7 @@ GameObject:
   - component: {fileID: 803055775}
   - component: {fileID: 803055776}
   m_Layer: 0
-  m_Name: EyeDataWriter
+  m_Name: EyeDataWriterWithHandsArms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1459,7 +1459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f12617753a060b4caced2f1b12b7fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initOnStart: 0
+  initOnStart: 1
   isOn: 0
   writeHeadPos: 1
   writeEuler: 1
@@ -1473,6 +1473,8 @@ MonoBehaviour:
   filepath: 
   filename: EyeData
   pathCreator: {fileID: 1541996667}
+  right_arm: {fileID: 6518990964623469895}
+  left_arm: {fileID: 5357344570410731767}
 --- !u!1 &914641168
 GameObject:
   m_ObjectHideFlags: 0
@@ -2967,54 +2969,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939021254}
   m_CullTransparentMesh: 1
---- !u!1 &1983326616
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1983326618}
-  - component: {fileID: 1983326617}
-  m_Layer: 0
-  m_Name: HandAndArmsWriter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1983326617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1983326616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 515040dd52bee8743a5b9a4c1e0be581, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eyeTracker: {fileID: 803055776}
-  head: {fileID: 5527926943289977956}
-  right_arm: {fileID: 6518990964623469895}
-  left_arm: {fileID: 5357344570410731767}
---- !u!4 &1983326618
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1983326616}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.035081852, y: 0.28333384, z: -0.48824948}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2000801199
 GameObject:
   m_ObjectHideFlags: 0
@@ -5594,4 +5548,3 @@ SceneRoots:
   - {fileID: 1432419525}
   - {fileID: 1669628536}
   - {fileID: 803055775}
-  - {fileID: 1983326618}

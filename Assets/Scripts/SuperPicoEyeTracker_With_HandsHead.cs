@@ -5,7 +5,7 @@ using System.IO;
 using System.Collections.Generic;
 
 
-public class SuperPicoEyeTracker : MonoBehaviour
+public class SuperPicoEyeTracker_With_HandsHead : MonoBehaviour
 {
     [SerializeField] bool initOnStart = false, isOn = false, writeHeadPos = true, writeEuler = true, writeHit = false;
     [SerializeField] GameObject head = null, origin = null;
@@ -32,12 +32,48 @@ public class SuperPicoEyeTracker : MonoBehaviour
     private int supportedModesCount;
     private EyeTrackingMode[] supportedModes;
 
+    private StreamWriter writerHead;
+    private StreamWriter writerLA;
+    private StreamWriter writerRA;
+    [SerializeField] private GameObject right_arm;
+    [SerializeField] private GameObject left_arm;
+
 
     private void Start()
     {
         if (initOnStart)
         {
             Init();
+            if (PlayerPrefs.GetInt("Is_write_data") == 0)
+            {
+                return;
+            }
+            string filepath = pathCreator.data_path;
+            string filename = "HeadData" + ".csv";
+            string fullpath = Path.Combine(filepath, filename);
+            if (!Directory.Exists(filepath))
+            {
+                Directory.CreateDirectory(filepath);
+            }
+            writerHead = new StreamWriter(fullpath, true, System.Text.Encoding.UTF8);
+            writerHead.Flush();
+            writerHead.WriteLine("Timestamp;Position.x;Position.y;Position.z;Rotation.x;Rotation.y;Rotation.z;Rotation.w");
+            if (left_arm.activeSelf)
+            {
+                filename = "LeftArmData" + ".csv";
+                fullpath = Path.Combine(filepath, filename);
+                writerLA = new StreamWriter(fullpath, true, System.Text.Encoding.UTF8);
+                writerLA.Flush();
+                writerLA.WriteLine("Timestamp;Position.x;Position.y;Position.z;Rotation.x;Rotation.y;Rotation.z;Rotation.w");
+            }
+            if (right_arm.activeSelf)
+            {
+                filename = "RightArmData" + ".csv";
+                fullpath = Path.Combine(filepath, filename);
+                writerRA = new StreamWriter(fullpath, true, System.Text.Encoding.UTF8);
+                writerRA.Flush();
+                writerRA.WriteLine("Timestamp;Position.x;Position.y;Position.z;Rotation.x;Rotation.y;Rotation.z;Rotation.w");
+            }
         }
         ray.gameObject.SetActive(false);
     }
@@ -63,6 +99,7 @@ public class SuperPicoEyeTracker : MonoBehaviour
         Debug.Log($"writing to: {fullpath}");
 
         writer = new StreamWriter(fullpath, true, System.Text.Encoding.UTF8);
+        writer.Flush();
         string headers = "Timestamp;" +
             "leftPos.x;leftPos.y;leftPos.z;leftRot.x;leftRot.y;leftRot.z;leftRot.w;leftOpenness;" +
             "rightPos.x;rightPos.y;rightPos.z;rightRot.x;rightRot.y;rightRot.z;rightRot.w;rightOpenness;" +
@@ -89,40 +126,33 @@ public class SuperPicoEyeTracker : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isOn)
+        if (!isOn || PlayerPrefs.GetInt("Is_write_data") == 0)
         {
             return;
         }
-
+        if (writerHead != null)
+        {
+            var pos = head.transform.position;
+            var rot = head.transform.rotation;
+            writerHead.WriteLine($"{DateTime.Now.ToString("HH:mm:ss.ffffff")};" +
+            $"{pos.x};{pos.y};{pos.z};{rot.x};{rot.y};{rot.z};{rot.w}");
+        }
+        if (writerLA != null)
+        {
+            var pos = left_arm.transform.position;
+            var rot = left_arm.transform.rotation;
+            writerLA.WriteLine($"{DateTime.Now.ToString("HH:mm:ss.ffffff")};" +
+            $"{pos.x};{pos.y};{pos.z};{rot.x};{rot.y};{rot.z};{rot.w}");
+        }
+        if (writerRA != null)
+        {
+            var pos = right_arm.transform.position;
+            var rot = right_arm.transform.rotation;
+            writerRA.WriteLine($"{DateTime.Now.ToString("HH:mm:ss.ffffff")};" +
+            $"{pos.x};{pos.y};{pos.z};{rot.x};{rot.y};{rot.z};{rot.w}");
+        }
         try
         {
-            // here we get individual data for each eye
-            //
-            //int getPerEyePose = PXR_MotionTracking.GetPerEyePose(ref timestamp, ref leftEyePose, ref rightEyePose);
-            //if (getPerEyePose == 0)
-            //{
-            //    try
-            //    {
-            //        PXR_MotionTracking.GetEyeOpenness(ref leftOpenness, ref rightOpenness);
-            //        leftPos = leftEyePose.Position.ToVector3();
-            //        rightPos = rightEyePose.Position.ToVector3();
-            //        leftRot = leftEyePose.Orientation.ToQuat();
-            //        rightRot = rightEyePose.Orientation.ToQuat();
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        if (useVrDebug) VRDebugField.Write($"failed to get per eye data - {e}");
-            //        Debug.LogException(e);
-            //    }
-            //}
-            //else
-            //{
-            //    //if (useVrDebug) VRDebugField.Write($"getPerEyePose returned error, code - {getPerEyePose}");
-            //    Debug.LogWarning($"getPerEyePose returned error, code - {getPerEyePose}");
-            //}
-            //
-            // here we get central eye data, this method could be used for individual eye too, but seems less stable
-            // for position
             getInfo = new EyeTrackingDataGetInfo();
             getInfo.flags = EyeTrackingDataGetFlags.PXR_EYE_POSITION;
             int getEyeTrackingData = PXR_MotionTracking.GetEyeTrackingData(ref getInfo, ref data);
@@ -133,8 +163,6 @@ public class SuperPicoEyeTracker : MonoBehaviour
                     centerPos = new Vector3(data.eyeDatas[2].pose.position.x, data.eyeDatas[2].pose.position.y, data.eyeDatas[2].pose.position.z);
                     leftPos = new Vector3(data.eyeDatas[0].pose.position.x, data.eyeDatas[0].pose.position.y, data.eyeDatas[0].pose.position.z);
                     rightPos = new Vector3(data.eyeDatas[1].pose.position.x, data.eyeDatas[1].pose.position.y, data.eyeDatas[1].pose.position.z);
-                    //string dataline = $"centerPos = {centerPos}";
-                    //if (useVrDebug) VRDebugField.Write(dataline);
                 }
                 catch (Exception e)
                 {
@@ -147,7 +175,6 @@ public class SuperPicoEyeTracker : MonoBehaviour
                 
                 Debug.LogWarning($"getEyeTrackingData returned error, code - {getEyeTrackingData}");
             }
-            // for rotation
             getInfo = new EyeTrackingDataGetInfo();
             getInfo.flags = EyeTrackingDataGetFlags.PXR_EYE_ORIENTATION;
             getEyeTrackingData = PXR_MotionTracking.GetEyeTrackingData(ref getInfo, ref data);
@@ -161,8 +188,6 @@ public class SuperPicoEyeTracker : MonoBehaviour
                         data.eyeDatas[0].pose.orientation.w);
                     rightRot = new Quaternion(data.eyeDatas[1].pose.orientation.x, data.eyeDatas[1].pose.orientation.y, data.eyeDatas[1].pose.orientation.z,
                         data.eyeDatas[1].pose.orientation.w);
-                    //string dataline = $"centerRot = {centerRot}";
-                    //if (useVrDebug) VRDebugField.Write(dataline);
                 }
                 catch (Exception e)
                 {
@@ -176,36 +201,6 @@ public class SuperPicoEyeTracker : MonoBehaviour
                 Debug.LogWarning($"getEyeTrackingData returned error, code - {getEyeTrackingData}");
             }
 
-            // This should work in enterprise version
-
-            //int getPupilInfo = PXR_MotionTracking.GetEyePupilInfo(ref eyePupilPosition);
-            //if (getPupilInfo == 0)
-            //{
-            //    try
-            //    {
-            //        leftPupDiameter = eyePupilPosition.leftEyePupilDiameter;
-            //        rightPupDiameter = eyePupilPosition.rightEyePupilDiameter;
-            //
-            //        if (useVrDebug) VRDebugField.Write($"pupil to string = {eyePupilPosition.ToString()}");
-            //
-            //        // this values are fixed floats, that could be used only with unsafe code
-            //        //leftPupPos = eyePupilPosition.leftEyePupilPosition;
-            //        //rightPupPos = eyePupilPosition.rightEyePupilPosition;
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        if (useVrDebug) VRDebugField.Write($"failed to get pupils data - {e}");
-            //    }
-            //}
-            //else
-            //{
-            //    if (useVrDebug) VRDebugField.Write($"getPupilInfo returned error, code - {getPerEyePose}");
-            //}
-
-
-            //string datalineDebug = $"timestamp = {timestamp.ToString()}, datetime = {DateTime.Now.ToString("HH:mm:ss.ffffff")}, leftEyePos = {leftPos.ToString()}, leftEyeRot = {leftRot.ToString()}," +
-            //    $" leftOpenness = {leftOpenness}, rightEyePos = {rightPos.ToString()}, rightEyeRot = {rightRot.ToString()}, rightOpenness = {rightOpenness}";
-            //if (useVrDebug) VRDebugField.Write(datalineDebug);
             string dataline = $"{DateTime.Now.ToString("HH:mm:ss.ffffff")};" +
                     $"{leftPos.x};{leftPos.y};{leftPos.z};{leftRot.x};{leftRot.y};{leftRot.z};{leftRot.w};{leftOpenness};" +
                     $"{rightPos.x};{rightPos.y};{rightPos.z};{rightRot.x};{rightRot.y};{rightRot.z};{rightRot.w};{rightOpenness};" +
@@ -314,5 +309,17 @@ public class SuperPicoEyeTracker : MonoBehaviour
         
         Debug.Log("eye tracking stopped");
         ray.gameObject.SetActive(false);
+        if (writerHead != null)
+        {
+            writerHead.Close();
+        }
+        if (writerLA != null)
+        {
+            writerLA.Close();
+        }
+        if (writerRA != null)
+        {
+            writerRA.Close();
+        }
     }
 }
