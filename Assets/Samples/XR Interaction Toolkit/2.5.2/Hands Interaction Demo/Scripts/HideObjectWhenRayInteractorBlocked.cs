@@ -1,5 +1,8 @@
 ﻿namespace UnityEngine.XR.Interaction.Toolkit.Samples.Hands
+
 {
+    using UnityEngine.XR.Interaction.Toolkit.Interactors;
+
     /// <summary>
     /// Hides the specified GameObject when the associated XRRayInteractor is blocked by an interaction within its group.
     /// </summary>
@@ -7,7 +10,7 @@
     {
         [SerializeField]
         [Tooltip("The XRRayInteractor that this component monitors for blockages.")]
-        XRRayInteractor m_Interactor;
+        UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor m_Interactor;
 
         [SerializeField]
         [Tooltip("The GameObject to hide when the XRRayInteractor is blocked.")]

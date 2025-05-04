@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
+
 
 public class PicoInputs : MonoBehaviour
 {
@@ -43,7 +43,7 @@ public class PicoInputs : MonoBehaviour
         }
         else
         {
-            right_arm.GetComponent<XRRayInteractor>().maxRaycastDistance = 50f;
+            right_arm.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>().maxRaycastDistance = 50f;
             is_line_shown_right = true;
         }
     }
@@ -55,7 +55,7 @@ public class PicoInputs : MonoBehaviour
         }
         else
         {
-            left_arm.GetComponent<XRRayInteractor>().maxRaycastDistance = 50f;
+            left_arm.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>().maxRaycastDistance = 50f;
             is_line_shown_left = true;
         }
     }
@@ -63,7 +63,7 @@ public class PicoInputs : MonoBehaviour
     {
         if (is_line_shown_right)
         {
-            right_arm.GetComponent<XRRayInteractor>().maxRaycastDistance = 0f;
+            right_arm.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>().maxRaycastDistance = 0f;
             is_line_shown_right = false;
         }
         else
@@ -75,7 +75,7 @@ public class PicoInputs : MonoBehaviour
     {
         if (is_line_shown_left)
         {
-            left_arm.GetComponent<XRRayInteractor>().maxRaycastDistance = 0f;
+            left_arm.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>().maxRaycastDistance = 0f;
             is_line_shown_left = false;
         }
         else
