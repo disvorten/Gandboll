@@ -44,10 +44,6 @@ public class SuperPicoEyeTracker_With_HandsHead : MonoBehaviour
         if (initOnStart)
         {
             Init();
-            if (PlayerPrefs.GetInt("Is_write_data") == 0)
-            {
-                return;
-            }
             string filepath = pathCreator.data_path;
             string filename = "HeadData" + ".csv";
             string fullpath = Path.Combine(filepath, filename);
@@ -80,10 +76,6 @@ public class SuperPicoEyeTracker_With_HandsHead : MonoBehaviour
 
     public void Init()
     {
-        if (PlayerPrefs.GetInt("Is_write_data") == 0)
-        {
-            return;
-        }
         
         //string filename = DateTime.Now.ToString("ddMMyyyy_HHmmss_") + this.filename + ".csv";
         string filepath = pathCreator.data_path;
@@ -126,7 +118,7 @@ public class SuperPicoEyeTracker_With_HandsHead : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isOn || PlayerPrefs.GetInt("Is_write_data") == 0)
+        if (!isOn)
         {
             return;
         }

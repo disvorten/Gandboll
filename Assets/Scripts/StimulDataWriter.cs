@@ -13,8 +13,7 @@ public class StimulDataWriter : MonoBehaviour
     private string stimul_path;
     void Start()
     {
-        if(PlayerPrefs.GetInt("Is_write_data") == 1)
-        {
+
             stimul_path = data_path + "/StimulsData";
             Directory.CreateDirectory(stimul_path);
             //Debug.Log(stimul_path);
@@ -34,13 +33,11 @@ public class StimulDataWriter : MonoBehaviour
                 sw.Close();
             }
             File.Copy(config_path, cfg, true);
-        }
     }
 
     void FixedUpdate()
     {
-        if (PlayerPrefs.GetInt("Is_write_data") == 1)
-        {
+
             if (transform.childCount >= 2)
             {
                 using (StreamWriter sw = File.AppendText(stimul_path + $"/{stimul_number}_stimul.csv"))
@@ -54,6 +51,5 @@ public class StimulDataWriter : MonoBehaviour
                     sw.Close();
                 }
             }
-        }
     }
 }
