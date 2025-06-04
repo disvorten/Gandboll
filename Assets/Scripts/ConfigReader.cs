@@ -21,6 +21,7 @@ public class ConfigReader : ScriptableObject
 
     private string delimeter = " ";
     public float false_stimuls_percentage { get; private set; }
+    public float reflection_percentage { get; private set; }
     public float diameter_of_stimul { get; private set; }
     public void ReadConfig(string name)
     {
@@ -52,6 +53,9 @@ public class ConfigReader : ScriptableObject
                             break;
                         case "false_stimuls_percentage":
                             false_stimuls_percentage = float.Parse(lines[i + 1], culture);
+                            break;
+                        case "reflection_percentage":
+                            reflection_percentage = float.Parse(lines[i + 1], culture);
                             break;
                         case "mass_of_stimul":
                             mass_of_stimul = float.Parse(lines[i + 1], culture);

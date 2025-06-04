@@ -15,6 +15,7 @@ public class Shooter_controller : MonoBehaviour
     public float mass_of_stimul;
     public bool is_catched = false;
     public bool use_gravity = false;
+    private GameObject ball;
     
     void Start()
     {
@@ -25,7 +26,7 @@ public class Shooter_controller : MonoBehaviour
     {
         yield return new WaitForSeconds(delta_before_shoot);
         var projectile = projectiles[Random.Range(0, projectiles.Length)];
-        var ball = Instantiate(projectile, transform.position, transform.rotation, transform);
+        ball = Instantiate(projectile, transform.position, transform.rotation, transform);
         ball.transform.localScale = Vector3.one * diameter_of_stimul;
         if (is_false_stimul)
         {
@@ -40,8 +41,13 @@ public class Shooter_controller : MonoBehaviour
             ball.GetComponent<Rigidbody>().useGravity = false;
         ball.GetComponent<Rigidbody>().mass = mass_of_stimul;
         //ball.GetComponent<Rigidbody>().AddForce(direction * velocity/3.6f/7.87f, ForceMode.VelocityChange);
-        ball.GetComponent<Rigidbody>().AddForce(direction.normalized * velocity/3.6f, ForceMode.VelocityChange);
+        //ball.GetComponent<Rigidbody>().AddForce(direction.normalized * velocity/3.6f, ForceMode.VelocityChange);
+        ball.GetComponent<Rigidbody>().AddForce(direction.normalized * velocity/3.6f * 1.22f, ForceMode.VelocityChange);
         ball.GetComponent<Rigidbody>().AddTorque(new Vector3(0.7f, 0.7f, 0.7f) * velocity, ForceMode.VelocityChange);
     }
+    private void OnDestroy()
+    {
 
+        Debug.Log("Real finish point: " + ball.transform.position);
+    }
 }
