@@ -80,7 +80,7 @@ public class VRKB : MonoBehaviour
         gameObject.SetActive(true);
         ClearAutofillButtons();
         targetTextField = inputFields[listElement];
-        targetTextField.text = "";
+        //targetTextField.text = "";
         foreach (GameObject outline in outlines)
         {
             outline.SetActive(false);
